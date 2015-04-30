@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ p<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -21,11 +21,36 @@
   <body ng-app="starter">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">myNetwork</h1>
+    </ion-header-bar>
+    <ion-header-bar class="bar-subheader bar-positive">
+      <h1 class="title">Subheader</h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <ion-list>
+        <button class="button button-positive">button</button>
+        <button class="button button-block button-outline button-positive">
+          Outlined Button
+        </button>
+        <button class="button button-block button-positive">Block Button</button>
+        <button class="button button-block button-clear  button-positive">Clear Button</button>
+        <ion-item href="#" class="item-positive">Item</ion-item>
+        <ion-toggle toggle-class="toggle-positive">Toggle</ion-toggle>
+        <div class="item range range-positive">
+          <i class="icon ion-ios7-sunny-outline"></i>
+          <input type="range" name="volume" min="0" max="100" value="33">
+          <i class="icon ion-ios7-sunny"></i>
+        </div>
+        <a class="item" href="#">
+          Badges
+          <span class="badge badge-positive">0</span>
+        </a>
+      </ion-list>
+    </ion-content>
+    <ion-footer-bar class="bar-positive">
+      <h1 class="title">Footer</h1>
+    </ion-footer-bar>
+  </ion-pane>
   </body>
 </html>
