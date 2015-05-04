@@ -1,56 +1,407 @@
- p<!DOCTYPE html>
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+        <script type="text/javascript" src="assets/ionic.bundle.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/ionic.min.css"></link>
+        <link rel="stylesheet" type="text/css" href="css/index.css"></link> 
+        <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"></link> 
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="libs/ngStorage.js"></script>
+ 
+       
+        <script type="text/javascript" src="app/components/audioplayer/audioPlayerController.js"></script>
+        <!--<script type="text/javascript" src="reader/js/libs/zip.min.js"></script>-->
+                <!-- EPUBJS Renderer -->
+        <script src="build/epub.js"></script>
+        <script>
+            EPUBJS.Render.Iframe.prototype.setLeft = function(leftPos){
+                this.docEl.style["-webkit-transform"] = 'translate('+ (-leftPos) + 'px, 0)';
+            };
+        </script> 
+        
+       
+        <link rel="stylesheet" href="css/basic.css">
+                
+  
+
+        <style type="text/css">
+          #main {
+            border-color: red;
+            border-width: 5px;
+            border-style: solid;
+
+          }
+
+          #area {
+            border-style: solid;
+            border-width: 5px;
+            border-color: red;
+            
+          }
+          .beige{
+            background-color:Beige !important;
+          }
+          .black{
+            background-color:Black !important;
+          }
+          .white{
+            background-color:White !important;
+          }
+         
 
 
-    <!-- compiled css output -->
-    <link href="css/ionic.app.css" rel="stylesheet">
+        </style>
+        <title>Hello World</title>
+        <script type="text/javascript" src="assets/ng-cordova.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </head>
+    <body ng-app="epubApp", ng-controller="epubAppController">
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-  </head>
-  <body ng-app="starter">
-
-    <ion-pane>
-    <ion-header-bar class="bar-positive">
-      <h1 class="title">myNetwork</h1>
+<script id="settings-menu.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-header-bar>
+      <h1 class="title">Einstellungen</h1>
     </ion-header-bar>
-    <ion-header-bar class="bar-subheader bar-positive">
-      <h1 class="title">Subheader</h1>
-    </ion-header-bar>
-    <ion-content class="padding scroll-bg">
-      <ion-list>
-        <button class="button button-positive">button</button>
-        <button class="button button-block button-outline button-positive">
-          Outlined Button
-        </button>
-        <button class="button button-block button-positive">Block Button</button>
-        <button class="button button-block button-clear  button-positive">Clear Button</button>
-        <ion-item href="#" class="item-positive">Item</ion-item>
-        <ion-toggle toggle-class="toggle-positive">Toggle</ion-toggle>
-        <div class="item range range-positive">
-          <i class="icon ion-ios7-sunny-outline"></i>
-          <input type="range" name="volume" min="0" max="100" value="33">
-          <i class="icon ion-ios7-sunny"></i>
-        </div>
-        <a class="item" href="#">
-          Badges
-          <span class="badge badge-positive">0</span>
-        </a>
-      </ion-list>
+    <ion-content>
+     <div>
+      <button class="button button-block button-positive" ng-click="decreaseFontSize();")> -  </button>
+      <button class="button button-block button-positive" ng-click="increaseFontSize();")> + </button>
+      <button class="button button-block button-positive" ng-click="setBeige();")> Beige </button>
+      <button class="button button-block button-positive" ng-click="setDark();")> Dunkel </button>
+      <button class="button button-block button-positive" ng-click="setLight();")> Hell </button>
+      <button ng-click="changeFont()" class="button button-block button-positive">Arial Black</button>
+      <button ng-click="changeFont2()" class="button button-block button-positive">Times New Roman</button>
+    </div>
     </ion-content>
-    <ion-footer-bar class="bar-positive">
-      <h1 class="title">Footer</h1>
-    </ion-footer-bar>
-  </ion-pane>
-  </body>
+  </ion-popover-view>
+</script>
+       <ion-view> 
+          <ion-side-menus>
+            <ion-pane ion-side-menu-content drag-content="false"> 
+            <ion-header-bar align-title="left" class="bar bar-header bar-light">
+              <div class="buttons">
+                <button ng-click ="toggleLeft()" class = "button button-icon" > 
+                 <i class = "icon ion-navicon"> </i>
+                </button> 
+              <!-- Code used for the input element  with pagination -->
+              <!--<input id="currentpg" size="3" maxlength="3"/> / <span id="totalpg">0</span> -->
+              </div>
+              <!-- this h1 element has to stay otherwise the buttons are not on the left / right site in the header -->
+              <h1 class="title"></h1>
+              <div class="buttons">
+                <div ng-switch on="audioToReader">
+                  <div ng-switch-when="false">
+                    <button class="button button-icon" ng-click="toggleAudio()"> <i class = "ion-ios-book"></i> </button>
+                  </div>
+                  <div ng-switch-when="true">
+                    <button class="button button-icon" ng-click="toggleReader()"><i class= "ion-music-note"> </i> </button>
+                  </div>
+              </div>
+                <button ng-click="createBookmarkForCurrentPage()" class="button button-icon"> <i class="ion-bookmark"> </i> </button>
+                <button ng-click="goToLastPageVisited()" class="button button-icon"> <i class="ion-reply"> </i> </button>
+                <button class="button button-icon" ng-click="openPopover($event)"><i class="ionicons ion-ios-gear-outline"> </i></button>
+              </div>
+            </ion-header-bar>
+            <ion-view title="Dashboard">
+              <ion-content scroll="false" overflow-scroll="false">
+
+                <div id="main"  ng-class="{'black':colorBackground == 1,'beige':colorBackground == 2,'white':colorBackground == 3}" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+                  <div id="prev" onclick="book.prevPage();" class="arrow">‹</div>
+                  <div id="next" onclick="book.nextPage();" class="arrow">›</div>
+                </div>
+              </ion-content>
+            </ion-view>
+             
+            
+              
+             
+              <ion-footer-bar align-title="center" class="bar bar-footer bar-light">
+                 <div id="audioplayer" ng-controller="audioController" ng-hide="audioToReader">
+                  <button class="button ion-chevron-left" ng-click="prevMp3()"></button>
+                  <button class="button ion-skip-backward" ng-click="rewindMp3()"></button>
+                  <button class="button ion-stop" ng-click="stopMp3()"></button>
+                  <button class="button ion-play" ng-hide="isPlaying" ng-click="playMp3()"></button>
+                  <button class="button ion-pause" ng-hide ="!isPlaying" ng-click="pauseMp3()"></button>
+                  <button class="button ion-skip-forward" ng-click="fastforwardMp3()"></button>
+                  <button class="button ion-chevron-right" ng-click="nextMp3()"></button>
+                </div>
+                <div class="range">
+                <div id="controls">
+                </div>
+              </div>
+              </ion-footer-bar>
+            </ion-pane>
+
+            <ion-side-menu side="left">
+              <ion-content class="has-header">
+                <div class="padding-top">
+                  <button class="button button-full button-positive"  ng-click="showToc()">
+                    Inhaltsverzeichnis 
+                  </button>
+                </div>
+                    <div ng-switch on="toc"> 
+                    
+                    <div ng-switch-when="true" >
+                       <ion-list> 
+                      <ion-item class="item" ng-repeat="bookmark in generatedToc" ng-cloak ng-click="goToChapter(bookmark.cfi)">{{ bookmark.page }}
+                      </ion-item>
+                      </ion-list>
+                    </div>
+                 </div>
+                  <button class="button button-full button-positive"  ng-click="showBookmarks()">
+                    Lesezeichen
+                  </button>
+                  <div ng-switch on="marks"> 
+                    <div ng-switch-when="true" >
+                      <ion-list can-swipe="listCanSwipe"> 
+                      <ion-item class="item" ng-repeat="bookmark in bookmarks" ng-cloak ng-click="gotoBookmarkURL(bookmark.cfi)">{{ bookmark.page }}
+                        <ion-option-button  class="button-assertive " ng-click="deleteBookmark(bookmark)">
+                          <i class="icon ion-ios-trash-outline"></i>
+                        </ion-option-button>
+                      </ion-item>
+                      </ion-list>
+                      </div>
+                 </div>
+                <button class="button button-full button-positive" ng-click="openQuiz()">
+                Quiz
+               </button>
+               <button class="button button-full button-positive">
+                Info 
+                </button>
+            </ion-content>
+            </ion-side-menu>
+          </ion-side-menus>
+
+        </ion-view>
+ <script>
+        var headerHeight = document.getElementsByTagName("ion-header-bar")[0].clientHeight;
+        var footerHeight = document.getElementsByTagName("ion-footer-bar")[0].clientHeight;
+        var trim = headerHeight + footerHeight;
+
+        //var book = ePub("reader/effi/", {restore: true});
+        var media= null;
+        var viewport = {
+          width : screen.width,
+          height : screen.height
+        };
+
+        var viewportWidth = viewport.width;
+        var viewportHeight = viewport.height;
+        var media= null;
+
+        switch (window.orientation) {  
+          case 0:  
+          
+              // Portrait 
+              var book = ePub("reader/effi/", {width: 0.9 * viewportWidth, height: viewportHeight - 1.3 * trim});
+              break; 
+              
+          case 180:  
+          
+              // Portrait (Upside-down)
+              var book = ePub("reader/effi/", {width: 0.9 * viewportWidth, height: viewportHeight - 1.3 * trim});
+              break; 
+        
+          case -90:  
+          
+              // Landscape (Clockwise)
+              // use this to check for android instead of device.platform call since that plugin takes a while to load
+              // if(android) else{}
+              if(viewportHeight<viewportWidth){
+                var book = ePub("reader/effi/", {width: 0.9 * viewportWidth, height: viewportHeight - 1.5 * trim});
+              }
+              else{
+                var book = ePub("reader/effi/", {spreads:true,width: 0.9 * viewportHeight, height: viewportWidth -1.3 *  trim});
+              }
+              break;  
+        
+          case 90:  
+          
+              // Landscape  (Counterclockwise)
+              // use this to check for android instead of device.platform call since that plugin takes a while to load
+              // if(android) else{}
+              if(viewportHeight<viewportWidth){
+                var book = ePub("reader/effi/", {width: 0.9 * viewportWidth, height: viewportHeight - 1.5 * trim});
+              }
+              else{
+                var book = ePub("reader/effi/", {spreads:true,width: 0.9 * viewportHeight, height: viewportWidth - 1.3 * trim});
+              }
+              break;
+       
+        }
+        </script>
+        <script>            
+     
+ 
+
+
+             var rendered = book.renderTo("main");
+             console.log(book);
+             window.fontsize = 1;
+             // variable to save the current and CFI and the last CFI
+             // on Page change we update both
+             var currentCFI;
+             var previousCFI;
+
+
+
+            book.getMetadata().then(function(meta){
+
+                 document.
+                                    title = meta.bookTitle+" – "+meta.creator;
+                
+             });
+            // creating the toc element
+          
+             
+            //    book.displayChapter("epubcfi(/6/12[xepigraph_001]!4/2/20/2/1:49)");
+            
+
+            // creating the slider element  
+            var controls = document.getElementById("controls");
+//          var currentPage = document.getElementById("currentpg");
+//            var totalPages = document.getElementById("totalpg");
+            var slider = document.createElement("input");
+            var pageList;
+            var slide = function(){
+                book.gotoPage(slider.value);
+            };
+            var throttledSlide = _.throttle(slide, 200);
+            var mouseDown = false;
+
+
+            // Load in stored pageList from json or local storage
+            ///*
+            // i think this request does not work on ipad / iphone
+              EPUBJS.core.request("pagelist/console.json").then(function(storedPageList){
+              pageList = storedPageList;
+              //console.log(storedPageList)
+              book.loadPagination(pageList);
+            });
+
+            // Or generate the pageList on the fly
+//             book.ready.all.then(function(){
+//               book.generatePagination();
+//             });
+
+            // Wait for the pageList to be ready and then show slider
+            book.pageListReady.then(function(pageList){
+                controls.style.display = "block";
+                //console.log(JSON.stringify(pageList)); // Save the result
+                //console.save(pageList);
+                slider.setAttribute("type", "range");
+                slider.setAttribute("min", book.pagination.firstPage);
+                slider.setAttribute("max", book.pagination.lastPage);
+                slider.setAttribute("step", 1);
+                slider.setAttribute("value", 0);
+
+                slider.addEventListener("change", throttledSlide, false);
+                slider.addEventListener("mousedown", function(){
+                    mouseDown = true;
+                }, false);
+                slider.addEventListener("mouseup", function(){
+                    mouseDown = false;
+                }, false);
+
+                // Wait for book to be rendered to get current page
+                rendered.then(function(){
+                    var currentLocation = book.getCurrentLocationCfi();
+                    var currentPage = book.pagination.pageFromCfi(currentLocation);
+                    var currentCFI = book.pagination.pageFromCfi(currentLocation);
+                    slider.value = currentPage;
+                    currentPage.value = currentPage;
+                });
+
+                controls.appendChild(slider);
+
+/*
+                totalPages.innerText = book.pagination.totalPages;
+                currentPage.addEventListener("change", function(){
+                    book.gotoPage(currentPage.value);
+                }, false);
+*/
+            });
+
+            book.on('book:pageChanged', function(location){
+                if(!mouseDown) {
+                    slider.value = location.anchorPage;
+                }
+              
+//                console.log(previousCFI);
+ //               console.log(currentCFI);
+//                currentPage.value = location.anchorPage;
+                console.log(location.pageRange)
+            });
+            book.on('renderer:locationChanged', function(locationCfi){
+                if(typeof currentCFI ==='undefined'){
+                  console.log('if start')
+
+                  previousCFI= book.getCurrentLocationCfi();
+                  currentCFI = book.getCurrentLocationCfi();
+                } else{
+                  console.log('else');
+
+                  previousCFI= currentCFI;
+                  currentCFI = book.getCurrentLocationCfi();
+                }
+                console.log('start');
+                console.log(previousCFI);
+                console.log(currentCFI);
+                console.log(locationCfi)
+                window.localStorage['currentCFI'] = currentCFI;
+          });
+            // use this function to save generated pagelist to json file
+            (function(console){
+
+              console.save = function(data, filename){
+
+                  if(!data) {
+                      console.error('Console.save: No data')
+                      return;
+                  }
+
+                  if(!filename) filename = 'console.json'
+
+                  if(typeof data === "object"){
+                      data = JSON.stringify(data, undefined, 4)
+                  }
+
+                  var blob = new Blob([data], {type: 'text/json'}),
+                      e    = document.createEvent('MouseEvents'),
+                      a    = document.createElement('a')
+
+                  a.download = filename
+                  a.href = window.URL.createObjectURL(blob)
+                  a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+                  e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+                  a.dispatchEvent(e)
+               }
+              })(console)
+        </script>
+    
+    </body>
 </html>

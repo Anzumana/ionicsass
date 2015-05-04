@@ -16,9 +16,9 @@ $dark:                            #444 !default;
 */
 
 // The path for our ionicons font files, relative to the built CSS in www/css
-$ionicons-font-path: "../lib/ionic/fonts" !default;
-$range-silde-width: 30px !default;
-$range-silde-height: 30px !default;
+//$ionicons-font-path: "../lib/ionic/fonts" !default;
+$range-silder-width: 300px;
+$range-slider-height: 300px;
 $positive:                        #057b6c !default;
 $big-bg:      'http://ioniconf.com/img/bg.jpg';
 .scroll-bg {
